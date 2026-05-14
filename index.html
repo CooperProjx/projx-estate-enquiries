@@ -14,7 +14,7 @@
   --silver:#CBD2D8;--silver-light:#E8EBED;--silver-xlight:#F4F5F7;
   --accent:#00A3E0;--accent-dark:#0082B3;--accent-glow:rgba(0,163,224,0.15);
   --green:#10B981;--amber:#F59E0B;--red:#EF4444;--white:#FFFFFF;
-  --bg:#F0F2F5;--text:#001E2E;--text-mid:#374151;--text-light:#6B7280;--text-xlight:#9CA3AF;
+  --bg:#001E2E;--text:#001E2E;--text-mid:#374151;--text-light:#6B7280;--text-xlight:#9CA3AF;
   --shadow-sm:0 1px 3px rgba(0,30,46,0.08),0 2px 6px rgba(0,30,46,0.04);
   --shadow-md:0 4px 12px rgba(0,30,46,0.1),0 2px 4px rgba(0,30,46,0.06);
   --shadow-lg:0 8px 24px rgba(0,30,46,0.12),0 4px 8px rgba(0,30,46,0.08);
@@ -60,13 +60,13 @@ input,select,textarea{font-family:'Montserrat',sans-serif}
 .top-home-btn.visible{display:block}
 
 /* ── Breadcrumb ── */
-.breadcrumb-bar{background:#fff;border-bottom:1px solid var(--silver-light);padding:10px 28px;min-height:40px;display:flex;align-items:center}
+.breadcrumb-bar{background:var(--navy-mid);border-bottom:1px solid rgba(255,255,255,0.06);padding:10px 28px;min-height:40px;display:flex;align-items:center}
 .breadcrumb{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
-.bc-item{font-size:12px;font-weight:600;color:var(--text-xlight);transition:color var(--transition)}
+.bc-item{font-size:12px;font-weight:600;color:rgba(203,210,216,0.55);transition:color var(--transition)}
 .bc-item.clickable{color:var(--accent);cursor:pointer}
-.bc-item.clickable:hover{color:var(--accent-dark);text-decoration:underline}
-.bc-item.current{color:var(--navy);font-weight:700}
-.bc-sep{color:var(--silver);font-size:11px}
+.bc-item.clickable:hover{color:#fff;text-decoration:underline}
+.bc-item.current{color:#fff;font-weight:700}
+.bc-sep{color:rgba(255,255,255,0.25);font-size:11px}
 
 /* ── View Container ── */
 .view{display:none;flex:1;flex-direction:column;animation:fadeSlideIn 0.3s ease}
@@ -75,13 +75,23 @@ input,select,textarea{font-family:'Montserrat',sans-serif}
 
 /* ── Landing: Map Hero ── */
 #view-landing{flex-direction:column}
-.map-section{position:relative;margin:14px 28px 28px;border-radius:var(--radius-lg);overflow:hidden;border:1px solid rgba(255,255,255,0.1);box-shadow:0 10px 30px rgba(0,0,0,0.25)}
+.map-section{position:relative;margin:14px 28px 28px;border-radius:var(--radius-lg);overflow:hidden;border:1px solid rgba(255,255,255,0.08);box-shadow:0 1px 0 rgba(255,255,255,0.04) inset, 0 18px 44px rgba(0,0,0,0.45)}
 #map{height:62vh;min-height:380px;width:100%;z-index:1}
 .map-split{display:flex;align-items:stretch;height:calc(100vh - 140px);min-height:520px}
 .map-pane{flex:1;position:relative;min-width:0;display:flex;flex-direction:column;background:#fff}
 .map-wrap{flex:1;position:relative;min-height:0}
 .map-split #map{height:100%;min-height:auto;width:100%}
-.map-pane .map-filter-bar{flex:0 0 auto;border-bottom:1px solid var(--silver-light)}
+.map-pane .map-filter-bar{flex:0 0 auto;background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent),var(--navy);border-bottom:1px solid rgba(255,255,255,0.08)}
+.map-pane .mfb-label{color:rgba(203,210,216,0.5)}
+.map-pane .mfb-chip{background:rgba(255,255,255,0.04);border-color:rgba(255,255,255,0.12);color:rgba(255,255,255,0.78)}
+.map-pane .mfb-chip.active{background:rgba(0,163,224,0.18);border-color:var(--accent);color:#fff;font-weight:700}
+.map-pane .mfb-chip:hover:not(.active){background:rgba(255,255,255,0.08);border-color:rgba(0,163,224,0.6);color:#fff}
+.map-pane .mfb-select{background:rgba(255,255,255,0.04);border-color:rgba(255,255,255,0.12);color:#fff}
+.map-pane .mfb-select:focus{border-color:var(--accent)}
+.map-pane .mfb-select.has-val{background:rgba(0,163,224,0.18);border-color:var(--accent);color:#fff}
+.map-pane .mfb-select option{background:var(--navy);color:#fff}
+.map-pane .mfb-clear{color:var(--accent)}
+.map-pane .mfb-clear:hover{color:#fff}
 .project-list-panel{flex:0 0 38%;background:var(--navy);overflow-y:auto;padding:14px 14px 18px;border-right:1px solid rgba(255,255,255,0.1);display:flex;flex-direction:column;min-width:0}
 .project-list-header{color:#fff;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:4px 6px 10px;border-bottom:1px solid rgba(255,255,255,0.08);margin-bottom:10px;display:flex;justify-content:space-between;align-items:center}
 .project-list-header span{color:var(--accent);font-weight:800;font-size:11px;letter-spacing:0.5px}
@@ -100,6 +110,7 @@ input,select,textarea{font-family:'Montserrat',sans-serif}
 .pc-price strong{color:#fff;font-weight:700}
 .pc-arrow{color:rgba(255,255,255,0.35);font-size:18px;flex:0 0 16px;transition:all 200ms ease}
 .project-card:hover .pc-arrow{color:var(--accent);transform:translateX(2px)}
+.project-list-empty{padding:32px 16px;text-align:center;color:rgba(203,210,216,0.55);font-size:12px;font-style:italic}
 @media(max-width:900px){
   .map-section{margin:0 0 14px;border-radius:0;border-left:none;border-right:none}
   .map-split{flex-direction:column;height:auto;min-height:0}
@@ -173,9 +184,9 @@ input,select,textarea{font-family:'Montserrat',sans-serif}
 
 /* ── Map Filter Bar ── */
 .map-filter-bar{
-  background:#fff;padding:10px 20px;
+  background:#F5F1E8;padding:10px 20px;
   display:flex;align-items:center;gap:14px;flex-wrap:wrap;
-  border-bottom:1px solid var(--silver-light);
+  border-bottom:1px solid rgba(0,30,46,0.08);
 }
 .mfb-group{display:flex;flex-direction:column;gap:3px}
 .mfb-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-xlight)}
@@ -285,58 +296,70 @@ input,select,textarea{font-family:'Montserrat',sans-serif}
 
 /* ── Section Headers ── */
 .view-header{margin-bottom:24px}
-.view-header h2{font-size:24px;font-weight:800;color:var(--navy);letter-spacing:-0.5px;margin-bottom:6px}
-.view-header p{font-size:13px;color:var(--text-light)}
+.view-header h2{font-size:24px;font-weight:800;color:#fff;letter-spacing:-0.5px;margin-bottom:6px}
+.view-header p{font-size:13px;color:rgba(203,210,216,0.7)}
 .view-header-row{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap}
 .back-btn{
   display:flex;align-items:center;gap:6px;
-  background:#fff;border:2px solid var(--silver-light);color:var(--text-mid);
+  background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.12);color:rgba(255,255,255,0.85);
   padding:9px 18px;border-radius:var(--radius-sm);font-size:12px;font-weight:700;
-  transition:all var(--transition);white-space:nowrap;flex-shrink:0;margin-bottom:16px;
+  transition:all var(--transition);white-space:nowrap;flex-shrink:0;margin-bottom:16px;cursor:pointer;
 }
-.back-btn:hover{border-color:var(--navy);color:var(--navy)}
+.back-btn:hover{border-color:var(--accent);color:#fff;background:rgba(0,163,224,0.12)}
 
 /* ── Lot Filter Controls ── */
 .filter-bar{
-  background:#fff;border-radius:var(--radius);padding:14px 18px;
-  box-shadow:var(--shadow-sm);margin-bottom:20px;
+  background:var(--navy-mid);border-radius:var(--radius);padding:14px 18px;
+  box-shadow:0 1px 0 rgba(255,255,255,0.04) inset, 0 8px 20px rgba(0,0,0,0.25);
+  border:1px solid rgba(255,255,255,0.06);margin-bottom:20px;
   display:flex;align-items:center;gap:12px;flex-wrap:wrap;
 }
 .filter-bar select{
-  padding:9px 12px;border:2px solid var(--silver-light);border-radius:var(--radius-sm);
-  font-size:12px;font-weight:600;color:var(--navy);outline:none;
-  transition:border-color var(--transition);background:#fff;
+  padding:9px 12px;border:1px solid rgba(255,255,255,0.12);border-radius:var(--radius-sm);
+  font-size:12px;font-weight:600;color:#fff;outline:none;
+  transition:border-color var(--transition);background:rgba(255,255,255,0.04);
 }
 .filter-bar select:focus{border-color:var(--accent)}
-.filter-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-xlight);display:block;margin-bottom:3px}
+.filter-bar select option{background:var(--navy);color:#fff}
+.filter-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:rgba(203,210,216,0.55);display:block;margin-bottom:3px}
 .filter-group{display:flex;flex-direction:column}
-.filter-result-count{font-size:12px;color:var(--text-xlight);margin-left:auto}
-.filter-chip{padding:7px 14px;border-radius:20px;border:2px solid var(--silver-light);font-size:11px;font-weight:600;color:var(--text-mid);cursor:pointer;transition:all var(--transition);background:#fff}
-.filter-chip.active{border-color:var(--navy);background:var(--navy);color:#fff}
-.filter-chip:hover:not(.active){border-color:var(--accent);color:var(--accent)}
+.filter-result-count{font-size:12px;color:rgba(203,210,216,0.6);margin-left:auto}
+.filter-chip{padding:7px 14px;border-radius:20px;border:1px solid rgba(255,255,255,0.12);font-size:11px;font-weight:600;color:rgba(255,255,255,0.78);cursor:pointer;transition:all var(--transition);background:rgba(255,255,255,0.04)}
+.filter-chip.active{border-color:var(--accent);background:rgba(0,163,224,0.18);color:#fff}
+.filter-chip:hover:not(.active){border-color:rgba(0,163,224,0.6);background:rgba(255,255,255,0.08);color:#fff}
+.price-slider-wrap{min-width:200px}
+.price-slider{-webkit-appearance:none;appearance:none;width:100%;height:6px;background:var(--silver-light);border-radius:3px;outline:none;margin:10px 0 2px;cursor:pointer}
+.price-slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:18px;height:18px;background:var(--accent);border-radius:50%;cursor:pointer;border:3px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,0.18);transition:transform 150ms ease}
+.price-slider::-webkit-slider-thumb:hover{transform:scale(1.15)}
+.price-slider::-moz-range-thumb{width:18px;height:18px;background:var(--accent);border-radius:50%;cursor:pointer;border:3px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,0.18)}
+.price-slider-val{font-size:11px;font-weight:700;color:var(--accent);margin-left:4px}
+.map-pane .price-slider{background:rgba(255,255,255,0.12)}
+.map-pane .price-slider::-webkit-slider-thumb{border-color:var(--navy)}
+.map-pane .price-slider::-moz-range-thumb{border-color:var(--navy)}
+.map-pane .price-slider-val{color:var(--accent)}
 
 /* ── Lot Grid ── */
 .lot-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
-.lot-card{background:#fff;border-radius:var(--radius);padding:20px;box-shadow:var(--shadow-sm);border:2px solid transparent;transition:all 0.2s ease;cursor:pointer}
-.lot-card:hover{box-shadow:var(--shadow-md);transform:translateY(-2px)}
-.lot-card.selected{border-color:var(--accent);background:linear-gradient(135deg,#fff 0%,#f0f9ff 100%)}
+.lot-card{background:var(--navy-mid);border-radius:var(--radius);padding:20px;box-shadow:0 1px 0 rgba(255,255,255,0.04) inset, 0 6px 18px rgba(0,0,0,0.25);border:1px solid rgba(255,255,255,0.06);transition:all 0.2s ease;cursor:pointer}
+.lot-card:hover{border-color:rgba(0,163,224,0.4);box-shadow:0 1px 0 rgba(255,255,255,0.06) inset, 0 10px 26px rgba(0,0,0,0.35);transform:translateY(-2px)}
+.lot-card.selected{border-color:var(--accent);background:linear-gradient(135deg,var(--navy-mid) 0%,rgba(0,163,224,0.12) 100%)}
 .lot-card-head{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px}
-.lot-name{font-size:18px;font-weight:800;color:var(--navy)}
-.lot-stage{font-size:10px;font-weight:600;color:var(--text-xlight);margin-top:2px}
+.lot-name{font-size:18px;font-weight:800;color:#fff}
+.lot-stage{font-size:10px;font-weight:600;color:rgba(203,210,216,0.55);margin-top:2px}
 .lot-avail{padding:4px 10px;border-radius:20px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.3px}
-.lot-avail.Available{background:#D1FAE5;color:#065F46}
-.lot-avail.Reserved{background:#E0E7FF;color:#3730A3}
-.lot-avail.Unreleased{background:#F3F4F6;color:#6B7280}
+.lot-avail.Available{background:rgba(16,185,129,0.18);color:#6EE7B7}
+.lot-avail.Reserved{background:rgba(99,102,241,0.18);color:#A5B4FC}
+.lot-avail.Unreleased{background:rgba(255,255,255,0.08);color:rgba(203,210,216,0.7)}
 .lot-specs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
-.lot-spec{padding:8px 10px;background:var(--silver-xlight);border-radius:var(--radius-sm);text-align:center}
-.lot-spec .sv{font-size:16px;font-weight:800;color:var(--navy)}
-.lot-spec .sl{font-size:9px;font-weight:600;color:var(--text-xlight);text-transform:uppercase;letter-spacing:0.3px}
+.lot-spec{padding:8px 10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);border-radius:var(--radius-sm);text-align:center}
+.lot-spec .sv{font-size:16px;font-weight:800;color:#fff}
+.lot-spec .sl{font-size:9px;font-weight:600;color:rgba(203,210,216,0.55);text-transform:uppercase;letter-spacing:0.3px}
 .lot-price-row{display:flex;align-items:center;justify-content:space-between}
 .lot-price{font-size:20px;font-weight:800;color:var(--accent)}
-.lot-select-btn{background:var(--navy);color:#fff;border:none;padding:9px 16px;border-radius:var(--radius-sm);font-size:11px;font-weight:700;letter-spacing:0.3px;text-transform:uppercase;transition:background var(--transition)}
+.lot-select-btn{background:rgba(0,163,224,0.18);color:#fff;border:1px solid var(--accent);padding:9px 16px;border-radius:var(--radius-sm);font-size:11px;font-weight:700;letter-spacing:0.3px;text-transform:uppercase;transition:all var(--transition);cursor:pointer}
 .lot-card.selected .lot-select-btn{background:var(--accent)}
 .lot-select-btn:hover{background:var(--accent)}
-.no-results{grid-column:1/-1;text-align:center;padding:52px 20px;color:var(--text-xlight);font-size:14px}
+.no-results{grid-column:1/-1;text-align:center;padding:52px 20px;color:rgba(203,210,216,0.6);font-size:14px}
 .no-results .icon{font-size:42px;margin-bottom:10px}
 
 /* ── Builder Grid (Select for Lot) ── */
@@ -437,25 +460,25 @@ input,select,textarea{font-family:'Montserrat',sans-serif}
 
 /* ── Continue Footer ── */
 .continue-footer{
-  background:#fff;border-top:1px solid var(--silver-light);
+  background:var(--navy-mid);border-top:1px solid rgba(255,255,255,0.08);
   padding:18px 28px;display:flex;align-items:center;justify-content:space-between;
-  position:sticky;bottom:0;z-index:50;
+  position:sticky;bottom:0;z-index:50;box-shadow:0 -8px 24px rgba(0,0,0,0.25);
 }
-.continue-footer-left{font-size:12px;color:var(--text-xlight)}
-.continue-footer-left strong{color:var(--navy)}
+.continue-footer-left{font-size:12px;color:rgba(203,210,216,0.65)}
+.continue-footer-left strong{color:#fff}
 .continue-btn{
-  background:var(--navy);color:#fff;border:none;
+  background:var(--accent);color:#fff;border:none;
   padding:13px 32px;border-radius:var(--radius-sm);font-size:13px;font-weight:700;
-  letter-spacing:0.5px;transition:all var(--transition);
+  letter-spacing:0.5px;transition:all var(--transition);cursor:pointer;
   display:flex;align-items:center;gap:8px;
 }
-.continue-btn:hover{background:var(--accent)}
-.continue-btn:disabled{background:var(--silver-light);color:var(--text-xlight);cursor:not-allowed}
+.continue-btn:hover{background:var(--accent-dark);transform:translateY(-1px);box-shadow:0 6px 16px rgba(0,163,224,0.3)}
+.continue-btn:disabled{background:rgba(255,255,255,0.06);color:rgba(203,210,216,0.4);cursor:not-allowed;transform:none;box-shadow:none}
 .continue-btn svg{transition:transform var(--transition)}
 .continue-btn:hover:not(:disabled) svg{transform:translateX(3px)}
 .validation-msg{
-  background:#FEF2F2;border:1px solid #FECACA;border-radius:var(--radius-sm);
-  padding:10px 14px;font-size:12px;color:var(--red);display:none;
+  background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.3);border-radius:var(--radius-sm);
+  padding:10px 14px;font-size:12px;color:#FCA5A5;display:none;
 }
 .validation-msg.visible{display:block}
 
@@ -522,51 +545,53 @@ input,select,textarea{font-family:'Montserrat',sans-serif}
 .summary-hero-right .proj-name{font-size:18px;font-weight:800;color:#fff}
 .summary-hero-right .proj-sub{font-size:12px;color:var(--silver);margin-top:2px}
 .summary-grid{display:grid;grid-template-columns:1fr;gap:18px;padding:28px 28px 0 28px;max-width:1200px;margin:0 auto;width:100%}
-.summary-card{background:#fff;border-radius:var(--radius-lg);padding:22px;box-shadow:var(--shadow-sm)}
+.summary-card{background:var(--navy-mid);border-radius:var(--radius-lg);padding:22px;box-shadow:0 1px 0 rgba(255,255,255,0.04) inset, 0 6px 18px rgba(0,0,0,0.25);border:1px solid rgba(255,255,255,0.06)}
 .summary-card-full{grid-column:1 / -1}
 .compare-grid{display:grid;gap:18px;padding:0 28px 28px 28px;max-width:1200px;margin:0 auto;width:100%}
 .compare-grid.one-col{grid-template-columns:1fr}
 .compare-grid.two-col{grid-template-columns:1fr 1fr}
-.compare-col{background:#fff;border-radius:var(--radius-lg);padding:22px;box-shadow:var(--shadow-sm);display:flex;flex-direction:column;gap:18px}
-.compare-col-header{padding-bottom:14px;border-bottom:1px solid var(--silver-light)}
+.compare-col{background:var(--navy-mid);border-radius:var(--radius-lg);padding:22px;box-shadow:0 1px 0 rgba(255,255,255,0.04) inset, 0 6px 18px rgba(0,0,0,0.25);border:1px solid rgba(255,255,255,0.06);display:flex;flex-direction:column;gap:18px}
+.compare-col-header{padding-bottom:14px;border-bottom:1px solid rgba(255,255,255,0.08)}
 .compare-col-label{font-size:10px;font-weight:800;letter-spacing:0.8px;text-transform:uppercase;color:var(--accent);margin-bottom:4px}
-.compare-col-name{font-size:18px;font-weight:800;color:var(--navy);letter-spacing:-0.3px}
-.compare-col-builder{font-size:12px;color:var(--text-mid);margin-top:2px}
-.compare-section h5{font-size:10px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;color:var(--text-light);margin-bottom:10px}
-.compare-total{margin-top:8px;padding-top:10px;border-top:1px solid var(--silver-light);font-weight:800}
-.compare-total .s-lbl{font-weight:700;color:var(--navy)}
+.compare-col-name{font-size:18px;font-weight:800;color:#fff;letter-spacing:-0.3px}
+.compare-col-builder{font-size:12px;color:rgba(203,210,216,0.7);margin-top:2px}
+.compare-section h5{font-size:10px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;color:rgba(203,210,216,0.55);margin-bottom:10px}
+.compare-total{margin-top:8px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.08);font-weight:800}
+.compare-total .s-lbl{font-weight:700;color:#fff}
 .compare-total .s-val{color:var(--accent);font-size:15px}
 @media (max-width:780px){ .compare-grid.two-col{grid-template-columns:1fr} }
-.eoi-choice-inline{background:var(--silver-xlight);border-radius:var(--radius-md);padding:14px 16px;margin-bottom:18px}
-.eoi-choice-label{font-size:12px;font-weight:700;color:var(--navy);margin-bottom:10px}
+.eoi-choice-inline{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);border-radius:var(--radius-md);padding:14px 16px;margin-bottom:18px}
+.eoi-choice-label{font-size:12px;font-weight:700;color:#fff;margin-bottom:10px}
 .eoi-choice-options{display:flex;gap:10px;flex-wrap:wrap}
-.eoi-choice-opt{flex:1;min-width:200px;display:flex;align-items:center;gap:10px;background:#fff;border:2px solid var(--silver-light);border-radius:var(--radius-sm);padding:12px 14px;cursor:pointer;transition:all var(--transition);font-size:13px;font-weight:600;color:var(--navy)}
-.eoi-choice-opt:has(input:checked){border-color:var(--accent);background:linear-gradient(135deg,#fff 0%,#f0f9ff 100%);box-shadow:0 0 0 3px var(--accent-glow)}
+.eoi-choice-opt{flex:1;min-width:200px;display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.12);border-radius:var(--radius-sm);padding:12px 14px;cursor:pointer;transition:all var(--transition);font-size:13px;font-weight:600;color:#fff}
+.eoi-choice-opt:has(input:checked){border-color:var(--accent);background:rgba(0,163,224,0.18);box-shadow:0 0 0 3px var(--accent-glow)}
 .eoi-choice-opt input{accent-color:var(--accent);width:18px;height:18px}
-.summary-card h4{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-light);margin-bottom:14px}
-.summary-row{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--silver-xlight);font-size:12px}
+.summary-card h4{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:rgba(203,210,216,0.55);margin-bottom:14px}
+.summary-row{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.06);font-size:12px}
 .summary-row:last-child{border-bottom:none}
-.summary-row .s-lbl{color:var(--text-light)}
-.summary-row .s-val{font-weight:700;color:var(--navy)}
-.eoi-section{background:#fff;border-radius:var(--radius-lg);padding:26px;box-shadow:var(--shadow-sm);margin:24px 28px 28px;max-width:1200px;margin-left:auto;margin-right:auto}
-.eoi-section h3{font-size:19px;font-weight:800;color:var(--navy);margin-bottom:4px}
-.eoi-section .eoi-sub{font-size:13px;color:var(--text-light);margin-bottom:22px}
+.summary-row .s-lbl{color:rgba(203,210,216,0.65)}
+.summary-row .s-val{font-weight:700;color:#fff}
+.eoi-section{background:var(--navy-mid);border-radius:var(--radius-lg);padding:26px;box-shadow:0 1px 0 rgba(255,255,255,0.04) inset, 0 6px 18px rgba(0,0,0,0.25);border:1px solid rgba(255,255,255,0.06);margin:24px 28px 28px;max-width:1200px;margin-left:auto;margin-right:auto}
+.eoi-section h3{font-size:19px;font-weight:800;color:#fff;margin-bottom:4px}
+.eoi-section .eoi-sub{font-size:13px;color:rgba(203,210,216,0.65);margin-bottom:22px}
 .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
 .form-field{display:flex;flex-direction:column;gap:5px}
 .form-field.full{grid-column:1/-1}
-.form-field label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-mid)}
-.form-field input,.form-field select,.form-field textarea{padding:11px 13px;border:2px solid var(--silver-light);border-radius:var(--radius-sm);font-size:14px;color:var(--navy);outline:none;transition:border-color var(--transition);background:#fff}
-.form-field input:focus,.form-field select:focus,.form-field textarea:focus{border-color:var(--accent)}
+.form-field label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:rgba(203,210,216,0.6)}
+.form-field input,.form-field select,.form-field textarea{padding:11px 13px;border:1px solid rgba(255,255,255,0.12);border-radius:var(--radius-sm);font-size:14px;color:#fff;outline:none;transition:border-color var(--transition);background:rgba(255,255,255,0.04)}
+.form-field input::placeholder,.form-field textarea::placeholder{color:rgba(203,210,216,0.4)}
+.form-field input:focus,.form-field select:focus,.form-field textarea:focus{border-color:var(--accent);background:rgba(255,255,255,0.06)}
+.form-field select option{background:var(--navy);color:#fff}
 .form-field textarea{resize:vertical;min-height:76px}
-.eoi-disclaimer{padding:12px 14px;background:var(--silver-xlight);border-radius:var(--radius-sm);font-size:11px;color:var(--text-light);margin:14px 0;line-height:1.5}
-.btn-submit{width:100%;padding:15px;background:var(--accent);color:#fff;border:none;border-radius:var(--radius);font-size:14px;font-weight:700;letter-spacing:0.5px;transition:all var(--transition)}
-.btn-submit:hover{background:var(--accent-dark);transform:translateY(-1px)}
+.eoi-disclaimer{padding:12px 14px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);border-radius:var(--radius-sm);font-size:11px;color:rgba(203,210,216,0.65);margin:14px 0;line-height:1.5}
+.btn-submit{width:100%;padding:15px;background:var(--accent);color:#fff;border:none;border-radius:var(--radius);font-size:14px;font-weight:700;letter-spacing:0.5px;transition:all var(--transition);cursor:pointer}
+.btn-submit:hover{background:var(--accent-dark);transform:translateY(-1px);box-shadow:0 6px 16px rgba(0,163,224,0.3)}
 .success-state{text-align:center;padding:48px 20px;display:none}
 .success-state.visible{display:block}
 .eoi-form-inner.hidden{display:none}
 .success-icon{font-size:52px;margin-bottom:14px}
-.success-state h3{font-size:21px;font-weight:800;color:var(--navy);margin-bottom:8px}
-.success-state p{font-size:13px;color:var(--text-light);max-width:400px;margin:0 auto}
+.success-state h3{font-size:21px;font-weight:800;color:#fff;margin-bottom:8px}
+.success-state p{font-size:13px;color:rgba(203,210,216,0.7);max-width:400px;margin:0 auto}
 
 /* ── Scrollbar ── */
 ::-webkit-scrollbar{width:6px;height:6px}
@@ -886,16 +911,9 @@ html,body{overflow-x:hidden;max-width:100vw}
         </div>
         <div class="map-pane">
           <div class="map-filter-bar" id="map-filter-bar">
-            <div class="mfb-group">
-              <span class="mfb-label">Package Price</span>
-              <select class="mfb-select" id="mf-price" onchange="applyMapFilters()">
-                <option value="any">Any Price</option>
-                <option value="0-450">&lt; $450k</option>
-                <option value="450-550">$450k – $550k</option>
-                <option value="550-650">$550k – $650k</option>
-                <option value="650-750">$650k – $750k</option>
-                <option value="750-up">$750k+</option>
-              </select>
+            <div class="mfb-group price-slider-wrap">
+              <span class="mfb-label">Package Price <span class="price-slider-val" id="mf-price-val">Any</span></span>
+              <input type="range" id="mf-price" min="0" max="1200000" step="25000" value="0" oninput="updateMapPriceLabel(this.value); applyMapFilters()" class="price-slider"/>
             </div>
             <div class="mfb-group">
               <span class="mfb-label">Bedrooms</span>
@@ -974,18 +992,9 @@ html,body{overflow-x:hidden;max-width:100vw}
             <option value="Unreleased">Unreleased Only</option>
           </select>
         </div>
-        <div class="filter-group">
-          <span class="filter-label">Max Price</span>
-          <select id="lot-max-price" onchange="renderLots()">
-            <option value="0">Any Price</option>
-            <option value="200000">Under $200k</option>
-            <option value="250000">Under $250k</option>
-            <option value="300000">Under $300k</option>
-            <option value="350000">Under $350k</option>
-            <option value="400000">Under $400k</option>
-            <option value="450000">Under $450k</option>
-            <option value="500000">Under $500k</option>
-          </select>
+        <div class="filter-group price-slider-wrap">
+          <span class="filter-label">Max Price <span class="price-slider-val" id="lot-max-price-val">Any</span></span>
+          <input type="range" id="lot-max-price" min="0" max="600000" step="25000" value="0" oninput="updateMaxPriceLabel(this.value); renderLots()" class="price-slider"/>
         </div>
         <span class="filter-result-count" id="lot-count-label"></span>
       </div>
@@ -1404,6 +1413,12 @@ function initApp() {
 
 // ── Formatters ────────────────────────────────────────────────────────────────
 function fmt(n) { return '$' + Math.round(n).toLocaleString('en-AU'); }
+function updateMaxPriceLabel(v){
+  const el = document.getElementById('lot-max-price-val');
+  if(!el) return;
+  v = parseInt(v)||0;
+  el.textContent = v===0 ? 'Any' : '≤ ' + fmt(v);
+}
 
 // Lot name display: strip the estate prefix (e.g. "SOR-008" → "Lot-008") so it reads cleanly
 // regardless of which project the lot is in. Identifier portion (after the dash) is preserved.
@@ -1532,11 +1547,11 @@ function initMap() {
 function projectPassesFilters(proj){
   const lots = ALL_LOTS[proj.id]||[];
   const builderMids = Object.values(BUILDER_MID_PRICES);
-  if(mapFilterState.price!=='any'){
+  if(mapFilterState.price>0){
     let hasMatch=false;
     lots.forEach(l=>{
       if(l.price<=0) return;
-      builderMids.forEach(mid=>{ if(priceInRange(l.price+mid,mapFilterState.price)) hasMatch=true; });
+      builderMids.forEach(mid=>{ if(l.price+mid <= mapFilterState.price) hasMatch=true; });
     });
     if(!hasMatch) return false;
   }
@@ -1564,30 +1579,31 @@ function renderProjectList(){
   const container = document.getElementById('project-list');
   const countEl = document.getElementById('pl-count');
   if(!container) return;
-  let visible = 0;
-  container.innerHTML = PROJECTS.map(proj=>{
-    const lots = ALL_LOTS[proj.id]||[];
-    const avail = lots.filter(l=>l.availability==='Available').length;
-    const prices = lots.filter(l=>l.price>0).map(l=>l.price);
-    const minP = prices.length ? Math.min(...prices) : 0;
-    const priceStr = minP ? 'Land from <strong>'+fmt(minP)+'</strong>' : 'POA';
-    const passes = projectPassesFilters(proj);
-    if(passes) visible++;
-    const onclick = passes ? `viewProjectLots('${proj.id}')` : '';
-    return `<div class="project-card${passes?'':' faded'}" onclick="${onclick}">
-      <div class="pc-emoji">${proj.emoji}</div>
-      <div class="pc-body">
-        <div class="pc-name">${proj.name}</div>
-        <div class="pc-sub">${proj.suburb} · ${proj.region}</div>
-        <div class="pc-meta">
-          <span class="pc-pill">${avail||lots.length} ${avail?'Avail':'Lots'}</span>
-          <span class="pc-price">${priceStr}</span>
+  const passing = PROJECTS.filter(p => projectPassesFilters(p));
+  if(!passing.length){
+    container.innerHTML = '<div class="project-list-empty">No projects match these filters.</div>';
+  } else {
+    container.innerHTML = passing.map(proj=>{
+      const lots = ALL_LOTS[proj.id]||[];
+      const avail = lots.filter(l=>l.availability==='Available').length;
+      const prices = lots.filter(l=>l.price>0).map(l=>l.price);
+      const minP = prices.length ? Math.min(...prices) : 0;
+      const priceStr = minP ? 'Land from <strong>'+fmt(minP)+'</strong>' : 'POA';
+      return `<div class="project-card" onclick="viewProjectLots('${proj.id}')">
+        <div class="pc-emoji">${proj.emoji}</div>
+        <div class="pc-body">
+          <div class="pc-name">${proj.name}</div>
+          <div class="pc-sub">${proj.suburb} · ${proj.region}</div>
+          <div class="pc-meta">
+            <span class="pc-pill">${avail||lots.length} ${avail?'Avail':'Lots'}</span>
+            <span class="pc-price">${priceStr}</span>
+          </div>
         </div>
-      </div>
-      <div class="pc-arrow">→</div>
-    </div>`;
-  }).join('');
-  if(countEl) countEl.textContent = visible+' of '+PROJECTS.length;
+        <div class="pc-arrow">→</div>
+      </div>`;
+    }).join('');
+  }
+  if(countEl) countEl.textContent = passing.length+' of '+PROJECTS.length;
 }
 
 // ── Map Filter Logic ──────────────────────────────────────────────────────────
@@ -1606,7 +1622,7 @@ BUILDERS.forEach(b => {
 const REGION_MAP = {"scenic-rim": ["oaklandestate"], "lockyer-valley": ["woodchester", "lakeviewestate"], "gold-coast": ["foxshipper", "riverina"], "logan": ["brookdale", "thegables"], "moreton-bay": ["atnineteen", "northpinegolfestate"], "northern-nsw": ["eade", "harvest"], "mackay": ["elio"], "sunshine-coast": ["serenity"], "gympie": ["sorensenrise"]};
 const REGION_BOUNDS = {"scenic-rim": [[-28.069999999999997, 152.89], [-27.91, 153.05]], "lockyer-valley": [[-27.639999999999997, 152.19], [-27.470000000000002, 152.36]], "gold-coast": [[-28.099999999999998, 153.26999999999998], [-27.78, 153.45000000000002]], "logan": [[-27.799999999999997, 152.95999999999998], [-27.590000000000003, 153.28]], "moreton-bay": [[-27.319999999999997, 152.85], [-27.080000000000002, 153.03]], "northern-nsw": [[-28.729999999999997, 153.53], [-28.560000000000002, 153.70000000000002]], "mackay": [[-21.209999999999997, 149.08999999999997], [-21.05, 149.25]], "sunshine-coast": [[-26.93, 152.89], [-26.770000000000003, 153.05]], "gympie": [[-26.279999999999998, 152.57], [-26.12, 152.73000000000002]]};
 
-const mapFilterState = {price:'any',beds:'any',region:'all',timeline:'all'};
+const mapFilterState = {price:0,beds:'any',region:'all',timeline:'all'};
 
 function setMapChip(btn){
   const group = btn.getAttribute('data-filter');
@@ -1620,10 +1636,9 @@ function setMapChip(btn){
 }
 
 function applyMapFilters(){
-  mapFilterState.price = document.getElementById('mf-price').value;
-  const isFiltered = mapFilterState.price!=='any'||mapFilterState.beds!=='any'||mapFilterState.region!=='all'||mapFilterState.timeline!=='all';
+  mapFilterState.price = parseInt(document.getElementById('mf-price').value)||0;
+  const isFiltered = mapFilterState.price>0||mapFilterState.beds!=='any'||mapFilterState.region!=='all'||mapFilterState.timeline!=='all';
   document.getElementById('mfb-clear').style.display = isFiltered?'block':'none';
-  document.getElementById('mf-price').classList.toggle('has-val',mapFilterState.price!=='any');
 
   if(mapFilterState.region!=='all'&&REGION_BOUNDS[mapFilterState.region]){
     leafletMap.fitBounds(REGION_BOUNDS[mapFilterState.region],{padding:[60,60],maxZoom:11});
@@ -1664,13 +1679,21 @@ function updateMarkerStyle(proj,marker,active){
 }
 
 function clearMapFilters(){
-  mapFilterState.price='any';mapFilterState.beds='any';mapFilterState.region='all';mapFilterState.timeline='all';
-  document.getElementById('mf-price').value='any';
+  mapFilterState.price=0;mapFilterState.beds='any';mapFilterState.region='all';mapFilterState.timeline='all';
+  document.getElementById('mf-price').value=0;
+  updateMapPriceLabel(0);
   document.querySelectorAll('.mfb-chip').forEach(c=>{
     const v=c.getAttribute('data-val');
     c.classList.toggle('active',v==='any'||v==='all');
   });
   applyMapFilters();
+}
+
+function updateMapPriceLabel(v){
+  const el = document.getElementById('mf-price-val');
+  if(!el) return;
+  v = parseInt(v)||0;
+  el.textContent = v===0 ? 'Any' : '≤ ' + fmt(v);
 }
 
 function viewProjectLots(projectId) {
