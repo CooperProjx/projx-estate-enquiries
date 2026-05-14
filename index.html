@@ -75,8 +75,38 @@ input,select,textarea{font-family:'Montserrat',sans-serif}
 
 /* ── Landing: Map Hero ── */
 #view-landing{flex-direction:column}
-.map-section{position:relative}
+.map-section{position:relative;margin:14px 28px 28px;border-radius:var(--radius-lg);overflow:hidden;border:1px solid rgba(255,255,255,0.1);box-shadow:0 10px 30px rgba(0,0,0,0.25)}
 #map{height:62vh;min-height:380px;width:100%;z-index:1}
+.map-split{display:flex;align-items:stretch;height:calc(100vh - 140px);min-height:520px}
+.map-pane{flex:1;position:relative;min-width:0;display:flex;flex-direction:column;background:#fff}
+.map-wrap{flex:1;position:relative;min-height:0}
+.map-split #map{height:100%;min-height:auto;width:100%}
+.map-pane .map-filter-bar{flex:0 0 auto;border-bottom:1px solid var(--silver-light)}
+.project-list-panel{flex:0 0 38%;background:var(--navy);overflow-y:auto;padding:14px 14px 18px;border-right:1px solid rgba(255,255,255,0.1);display:flex;flex-direction:column;min-width:0}
+.project-list-header{color:#fff;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:4px 6px 10px;border-bottom:1px solid rgba(255,255,255,0.08);margin-bottom:10px;display:flex;justify-content:space-between;align-items:center}
+.project-list-header span{color:var(--accent);font-weight:800;font-size:11px;letter-spacing:0.5px}
+#project-list{flex:1;overflow-y:auto;margin:0 -4px;padding:0 4px}
+.project-card{display:flex;gap:12px;align-items:center;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:11px 12px;margin-bottom:8px;cursor:pointer;transition:all 200ms ease}
+.project-card:hover{background:rgba(255,255,255,0.09);border-color:var(--accent);transform:translateX(2px)}
+.project-card.faded{opacity:0.32;filter:grayscale(0.6);cursor:default}
+.project-card.faded:hover{transform:none;background:rgba(255,255,255,0.04);border-color:rgba(255,255,255,0.08)}
+.pc-emoji{flex:0 0 44px;height:44px;background:rgba(255,255,255,0.08);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px}
+.pc-body{flex:1;min-width:0}
+.pc-name{color:#fff;font-size:14px;font-weight:700;letter-spacing:-0.2px;margin-bottom:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pc-sub{color:rgba(203,210,216,0.65);font-size:11px;font-weight:500;margin-bottom:5px}
+.pc-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.pc-pill{font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;background:rgba(255,202,87,0.18);color:var(--accent);letter-spacing:0.3px;white-space:nowrap}
+.pc-price{color:rgba(255,255,255,0.55);font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pc-price strong{color:#fff;font-weight:700}
+.pc-arrow{color:rgba(255,255,255,0.35);font-size:18px;flex:0 0 16px;transition:all 200ms ease}
+.project-card:hover .pc-arrow{color:var(--accent);transform:translateX(2px)}
+@media(max-width:900px){
+  .map-section{margin:0 0 14px;border-radius:0;border-left:none;border-right:none}
+  .map-split{flex-direction:column;height:auto;min-height:0}
+  .map-pane{flex:1 1 auto;min-height:0}
+  .map-wrap{height:50vh;min-height:300px}
+  .project-list-panel{flex:1 1 auto;max-height:50vh;border-right:none;border-bottom:1px solid rgba(255,255,255,0.1)}
+}
 .map-overlay-header{
   position:absolute;top:20px;left:50%;transform:translateX(-50%);z-index:10;
   background:rgba(0,30,46,0.85);backdrop-filter:blur(12px);
@@ -844,60 +874,71 @@ html,body{overflow-x:hidden;max-width:100vw}
   <!-- ══════════════════════════════════════════════ -->
   <div class="view active" id="view-landing" style="flex-direction:column">
 
-    <!-- Map Filter Bar -->
-    <div class="map-filter-bar" id="map-filter-bar">
-      <div class="mfb-group">
-        <span class="mfb-label">Package Price</span>
-        <select class="mfb-select" id="mf-price" onchange="applyMapFilters()">
-          <option value="any">Any Price</option>
-          <option value="0-450">&lt; $450k</option>
-          <option value="450-550">$450k – $550k</option>
-          <option value="550-650">$550k – $650k</option>
-          <option value="650-750">$650k – $750k</option>
-          <option value="750-up">$750k+</option>
-        </select>
-      </div>
-      <div class="mfb-group">
-        <span class="mfb-label">Bedrooms</span>
-        <div class="mfb-chips">
-          <button class="mfb-chip active" data-filter="mf-beds" data-val="any" onclick="setMapChip(this)">Any</button>
-          <button class="mfb-chip" data-filter="mf-beds" data-val="3" onclick="setMapChip(this)">3</button>
-          <button class="mfb-chip" data-filter="mf-beds" data-val="4" onclick="setMapChip(this)">4</button>
-          <button class="mfb-chip" data-filter="mf-beds" data-val="5" onclick="setMapChip(this)">5+</button>
-        </div>
-      </div>
-      <div class="mfb-group">
-        <span class="mfb-label">Region</span>
-        <div class="mfb-chips" style="overflow-x:auto;flex-wrap:nowrap;-webkit-overflow-scrolling:touch">
-          <button class="mfb-chip active" data-filter="mf-region" data-val="all" onclick="setMapChip(this)">All Regions</button>
-          <button class="mfb-chip" data-filter="mf-region" data-val="gold-coast" onclick="setMapChip(this)">Gold Coast</button>
-          <button class="mfb-chip" data-filter="mf-region" data-val="logan" onclick="setMapChip(this)">Logan</button>
-          <button class="mfb-chip" data-filter="mf-region" data-val="moreton-bay" onclick="setMapChip(this)">Moreton Bay</button>
-          <button class="mfb-chip" data-filter="mf-region" data-val="lockyer-valley" onclick="setMapChip(this)">Lockyer Valley</button>
-          <button class="mfb-chip" data-filter="mf-region" data-val="scenic-rim" onclick="setMapChip(this)">Scenic Rim</button>
-          <button class="mfb-chip" data-filter="mf-region" data-val="sunshine-coast" onclick="setMapChip(this)">Sunshine Coast</button>
-          <button class="mfb-chip" data-filter="mf-region" data-val="gympie" onclick="setMapChip(this)">Gympie</button>
-          <button class="mfb-chip" data-filter="mf-region" data-val="mackay" onclick="setMapChip(this)">Mackay</button>
-          <button class="mfb-chip" data-filter="mf-region" data-val="northern-nsw" onclick="setMapChip(this)">Northern NSW</button>
-        </div>
-      </div>
-      <div class="mfb-group">
-        <span class="mfb-label">Timeline</span>
-        <div class="mfb-chips">
-          <button class="mfb-chip active" data-filter="mf-timeline" data-val="all" onclick="setMapChip(this)">All</button>
-          <button class="mfb-chip" data-filter="mf-timeline" data-val="ready" onclick="setMapChip(this)">Ready Now</button>
-          <button class="mfb-chip" data-filter="mf-timeline" data-val="coming" onclick="setMapChip(this)">Coming Soon</button>
-        </div>
-      </div>
-      <button class="mfb-clear" id="mfb-clear" onclick="clearMapFilters()" style="display:none">✕ Clear All</button>
-    </div>
-
-    <!-- Map Hero -->
+    <!-- Map + List Split -->
     <div class="map-section">
-      <div id="map"></div>
-      <div class="map-overlay-header">
-        <h1>ProjX Project Locations</h1>
-        <p>Click a pin to explore lots &amp; packages</p>
+      <div class="map-split">
+        <div class="project-list-panel">
+          <div class="project-list-header">
+            <span style="color:#fff">Projects</span>
+            <span id="pl-count"></span>
+          </div>
+          <div id="project-list"></div>
+        </div>
+        <div class="map-pane">
+          <div class="map-filter-bar" id="map-filter-bar">
+            <div class="mfb-group">
+              <span class="mfb-label">Package Price</span>
+              <select class="mfb-select" id="mf-price" onchange="applyMapFilters()">
+                <option value="any">Any Price</option>
+                <option value="0-450">&lt; $450k</option>
+                <option value="450-550">$450k – $550k</option>
+                <option value="550-650">$550k – $650k</option>
+                <option value="650-750">$650k – $750k</option>
+                <option value="750-up">$750k+</option>
+              </select>
+            </div>
+            <div class="mfb-group">
+              <span class="mfb-label">Bedrooms</span>
+              <div class="mfb-chips">
+                <button class="mfb-chip active" data-filter="mf-beds" data-val="any" onclick="setMapChip(this)">Any</button>
+                <button class="mfb-chip" data-filter="mf-beds" data-val="3" onclick="setMapChip(this)">3</button>
+                <button class="mfb-chip" data-filter="mf-beds" data-val="4" onclick="setMapChip(this)">4</button>
+                <button class="mfb-chip" data-filter="mf-beds" data-val="5" onclick="setMapChip(this)">5+</button>
+              </div>
+            </div>
+            <div class="mfb-group">
+              <span class="mfb-label">Region</span>
+              <div class="mfb-chips" style="overflow-x:auto;flex-wrap:nowrap;-webkit-overflow-scrolling:touch">
+                <button class="mfb-chip active" data-filter="mf-region" data-val="all" onclick="setMapChip(this)">All Regions</button>
+                <button class="mfb-chip" data-filter="mf-region" data-val="gold-coast" onclick="setMapChip(this)">Gold Coast</button>
+                <button class="mfb-chip" data-filter="mf-region" data-val="logan" onclick="setMapChip(this)">Logan</button>
+                <button class="mfb-chip" data-filter="mf-region" data-val="moreton-bay" onclick="setMapChip(this)">Moreton Bay</button>
+                <button class="mfb-chip" data-filter="mf-region" data-val="lockyer-valley" onclick="setMapChip(this)">Lockyer Valley</button>
+                <button class="mfb-chip" data-filter="mf-region" data-val="scenic-rim" onclick="setMapChip(this)">Scenic Rim</button>
+                <button class="mfb-chip" data-filter="mf-region" data-val="sunshine-coast" onclick="setMapChip(this)">Sunshine Coast</button>
+                <button class="mfb-chip" data-filter="mf-region" data-val="gympie" onclick="setMapChip(this)">Gympie</button>
+                <button class="mfb-chip" data-filter="mf-region" data-val="mackay" onclick="setMapChip(this)">Mackay</button>
+                <button class="mfb-chip" data-filter="mf-region" data-val="northern-nsw" onclick="setMapChip(this)">Northern NSW</button>
+              </div>
+            </div>
+            <div class="mfb-group">
+              <span class="mfb-label">Timeline</span>
+              <div class="mfb-chips">
+                <button class="mfb-chip active" data-filter="mf-timeline" data-val="all" onclick="setMapChip(this)">All</button>
+                <button class="mfb-chip" data-filter="mf-timeline" data-val="ready" onclick="setMapChip(this)">Ready Now</button>
+                <button class="mfb-chip" data-filter="mf-timeline" data-val="coming" onclick="setMapChip(this)">Coming Soon</button>
+              </div>
+            </div>
+            <button class="mfb-clear" id="mfb-clear" onclick="clearMapFilters()" style="display:none">✕ Clear All</button>
+          </div>
+          <div class="map-wrap">
+            <div id="map"></div>
+            <div class="map-overlay-header">
+              <h1>ProjX Project Locations</h1>
+              <p>Click a pin or project to explore lots &amp; packages</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -1484,6 +1525,69 @@ function initMap() {
   if (pinBounds.length) {
     leafletMap.setView([-25.5, 152.5], 6);
   }
+
+  setTimeout(renderProjectList, 0);
+}
+
+function projectPassesFilters(proj){
+  const lots = ALL_LOTS[proj.id]||[];
+  const builderMids = Object.values(BUILDER_MID_PRICES);
+  if(mapFilterState.price!=='any'){
+    let hasMatch=false;
+    lots.forEach(l=>{
+      if(l.price<=0) return;
+      builderMids.forEach(mid=>{ if(priceInRange(l.price+mid,mapFilterState.price)) hasMatch=true; });
+    });
+    if(!hasMatch) return false;
+  }
+  if(mapFilterState.beds!=='any'){
+    const target=parseInt(mapFilterState.beds);
+    const isPlus=mapFilterState.beds==='5';
+    const matchDesigns=DESIGNS.filter(d=>isPlus?d.bed>=target:d.bed===target);
+    if(!matchDesigns.length) return false;
+    if(!lots.some(l=>matchDesigns.some(d=>l.frontage>=d.minFrontage))) return false;
+  }
+  if(mapFilterState.region!=='all'){
+    const rp=REGION_MAP[mapFilterState.region]||[];
+    if(!rp.includes(proj.id)) return false;
+  }
+  if(mapFilterState.timeline!=='all'){
+    const hasAvail=lots.some(l=>l.availability==='Available');
+    const allUnreleased=lots.length>0&&lots.every(l=>l.availability==='Unreleased');
+    if(mapFilterState.timeline==='ready'&&!hasAvail) return false;
+    if(mapFilterState.timeline==='coming'&&!allUnreleased) return false;
+  }
+  return true;
+}
+
+function renderProjectList(){
+  const container = document.getElementById('project-list');
+  const countEl = document.getElementById('pl-count');
+  if(!container) return;
+  let visible = 0;
+  container.innerHTML = PROJECTS.map(proj=>{
+    const lots = ALL_LOTS[proj.id]||[];
+    const avail = lots.filter(l=>l.availability==='Available').length;
+    const prices = lots.filter(l=>l.price>0).map(l=>l.price);
+    const minP = prices.length ? Math.min(...prices) : 0;
+    const priceStr = minP ? 'Land from <strong>'+fmt(minP)+'</strong>' : 'POA';
+    const passes = projectPassesFilters(proj);
+    if(passes) visible++;
+    const onclick = passes ? `viewProjectLots('${proj.id}')` : '';
+    return `<div class="project-card${passes?'':' faded'}" onclick="${onclick}">
+      <div class="pc-emoji">${proj.emoji}</div>
+      <div class="pc-body">
+        <div class="pc-name">${proj.name}</div>
+        <div class="pc-sub">${proj.suburb} · ${proj.region}</div>
+        <div class="pc-meta">
+          <span class="pc-pill">${avail||lots.length} ${avail?'Avail':'Lots'}</span>
+          <span class="pc-price">${priceStr}</span>
+        </div>
+      </div>
+      <div class="pc-arrow">→</div>
+    </div>`;
+  }).join('');
+  if(countEl) countEl.textContent = visible+' of '+PROJECTS.length;
 }
 
 // ── Map Filter Logic ──────────────────────────────────────────────────────────
@@ -1527,54 +1631,13 @@ function applyMapFilters(){
     leafletMap.setView([-25.5, 152.5], 6);
   }
 
-  const builderMids = Object.values(BUILDER_MID_PRICES);
-
   PROJECTS.forEach(proj=>{
-    const lots = ALL_LOTS[proj.id]||[];
     const marker = mapMarkers[proj.id];
     if(!marker) return;
-    let passes = true;
-
-    // Price filter: lot_price + any builder midpoint in range
-    if(mapFilterState.price!=='any'){
-      let hasMatch=false;
-      lots.forEach(l=>{
-        if(l.price<=0) return;
-        builderMids.forEach(mid=>{
-          if(priceInRange(l.price+mid,mapFilterState.price)) hasMatch=true;
-        });
-      });
-      if(!hasMatch) passes=false;
-    }
-
-    // Bedrooms: check if any design with that bed count fits any lot in this project
-    if(mapFilterState.beds!=='any'){
-      const target=parseInt(mapFilterState.beds);
-      const isPlus=mapFilterState.beds==='5';
-      const matchDesigns=DESIGNS.filter(d=>isPlus?d.bed>=target:d.bed===target);
-      if(!matchDesigns.length){passes=false;}
-      else{
-        const hasCompat=lots.some(l=>matchDesigns.some(d=>l.frontage>=d.minFrontage));
-        if(!hasCompat) passes=false;
-      }
-    }
-
-    // Region
-    if(mapFilterState.region!=='all'){
-      const rp=REGION_MAP[mapFilterState.region]||[];
-      if(!rp.includes(proj.id)) passes=false;
-    }
-
-    // Timeline
-    if(mapFilterState.timeline!=='all'){
-      const hasAvail=lots.some(l=>l.availability==='Available');
-      const allUnreleased=lots.length>0&&lots.every(l=>l.availability==='Unreleased');
-      if(mapFilterState.timeline==='ready'&&!hasAvail) passes=false;
-      if(mapFilterState.timeline==='coming'&&!allUnreleased) passes=false;
-    }
-
-    updateMarkerStyle(proj,marker,passes);
+    updateMarkerStyle(proj,marker,projectPassesFilters(proj));
   });
+
+  renderProjectList();
 }
 
 function priceInRange(pkg,range){
