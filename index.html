@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ProjX | Inquire About a Lot</title>
+<title>ProjX | Enquire About a Lot</title>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -854,7 +854,7 @@ html,body{overflow-x:hidden;max-width:100vw}
     <div class="top-bar-left">
       <div class="top-logo" onclick="goHome()">PX</div>
       <div>
-        <div class="top-title">Inquire About a Lot <span>— ProjX Projects</span></div>
+        <div class="top-title">Enquire About a Lot <span>— ProjX Projects</span></div>
       </div>
     </div>
     <div class="top-bar-right">
@@ -1194,14 +1194,14 @@ html,body{overflow-x:hidden;max-width:100vw}
   </div>
 
   <!-- ══════════════════════════════════════════════ -->
-  <!-- VIEW: LOT INQUIRY (public projects website)    -->
+  <!-- VIEW: LOT ENQUIRY (public projects website)    -->
   <!-- ══════════════════════════════════════════════ -->
-  <div class="view" id="view-lot-inquiry" style="flex-direction:column">
+  <div class="view" id="view-lot-enquiry" style="flex-direction:column">
     <div class="summary-hero">
       <div class="summary-hero-left">
         <div class="lbl">Expressing interest in</div>
-        <div class="amount" id="inquiry-hero-name">—</div>
-        <div class="qualifier" id="inquiry-hero-sub"></div>
+        <div class="amount" id="enquiry-hero-name">—</div>
+        <div class="qualifier" id="enquiry-hero-sub"></div>
       </div>
       <div class="summary-hero-right">
         <button class="back-btn" onclick="showView('lots')" style="background:rgba(255,255,255,0.12);color:#fff;border-color:rgba(255,255,255,0.25)">← Back to Lots</button>
@@ -1210,7 +1210,7 @@ html,body{overflow-x:hidden;max-width:100vw}
     <div class="summary-grid">
       <div class="summary-card summary-card-full">
         <h4>Lot Details</h4>
-        <div id="inquiry-lot-details"></div>
+        <div id="enquiry-lot-details"></div>
       </div>
     </div>
     <div class="eoi-section">
@@ -1238,11 +1238,11 @@ html,body{overflow-x:hidden;max-width:100vw}
         </div>
         <div class="eoi-disclaimer">By submitting this Expression of Interest, you acknowledge land pricing shown is indicative only and subject to change. This EOI does not constitute a binding offer. A ProjX consultant will contact you to discuss availability and progress next steps.</div>
         <div class="validation-msg" id="err-eoi">Please fill in all required fields.</div>
-        <button class="btn-submit" onclick="submitLotInquiry()">Submit Expression of Interest →</button>
+        <button class="btn-submit" onclick="submitLotEnquiry()">Submit Expression of Interest →</button>
       </div>
       <div class="success-state" id="eoi-success">
         <div class="success-icon">✅</div>
-        <h3>Inquiry Submitted!</h3>
+        <h3>Enquiry Submitted!</h3>
         <p id="eoi-success-msg">A ProjX consultant will be in touch within 1 business day to discuss this lot.</p>
         <p style="margin-top:12px;font-size:12px;color:var(--text-xlight)">Reference: <strong id="eoi-ref"></strong></p>
       </div>
@@ -1398,7 +1398,7 @@ initApp();
 
 // ── Init ──────────────────────────────────────────────────────────────────────
 function initApp() {
-  // No builder cards render on this page — just the map + lots + inquiry EOI.
+  // No builder cards render on this page — just the map + lots + enquiry EOI.
   initMap();
 }
 
@@ -1800,21 +1800,21 @@ function updateLotsFooter() {
 
 function continueFromLots() {
   if (!S.lot) { document.getElementById('err-lots').classList.add('visible'); return; }
-  renderLotInquiry();
-  showView('lot-inquiry');
+  renderLotEnquiry();
+  showView('lot-enquiry');
 }
 
-function renderLotInquiry() {
+function renderLotEnquiry() {
   const lot = S.lot;
   if (!lot) return;
   const proj = S.project || PROJECTS.find(p=>p.id===lot.project);
   // Hero header
-  const heroName = document.getElementById('inquiry-hero-name');
-  const heroSub  = document.getElementById('inquiry-hero-sub');
+  const heroName = document.getElementById('enquiry-hero-name');
+  const heroSub  = document.getElementById('enquiry-hero-sub');
   if (heroName) heroName.textContent = displayLotName(lot.name) + (proj?` · ${proj.name}`:'');
   if (heroSub)  heroSub.textContent  = proj ? `${proj.suburb}, ${proj.region}` : '';
   // Lot details card
-  const det = document.getElementById('inquiry-lot-details');
+  const det = document.getElementById('enquiry-lot-details');
   if (det) det.innerHTML = `
     <div class="summary-row"><span class="s-lbl">Project</span><span class="s-val">${proj?proj.name:'—'}</span></div>
     <div class="summary-row"><span class="s-lbl">Lot</span><span class="s-val">${displayLotName(lot.name)}</span></div>
@@ -2342,7 +2342,7 @@ function renderSummary() {
 
 function setEoiChoice(v) { S.eoiChoice = v; }
 
-function submitLotInquiry() {
+function submitLotEnquiry() {
   const fname=document.getElementById('eoi-fname').value.trim();
   const lname=document.getElementById('eoi-lname').value.trim();
   const email=document.getElementById('eoi-email').value.trim();
