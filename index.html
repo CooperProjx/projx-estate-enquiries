@@ -916,15 +916,6 @@ html,body{overflow-x:hidden;max-width:100vw}
               <input type="range" id="mf-price" min="0" max="1200000" step="25000" value="0" oninput="updateMapPriceLabel(this.value); applyMapFilters()" class="price-slider"/>
             </div>
             <div class="mfb-group">
-              <span class="mfb-label">Bedrooms</span>
-              <div class="mfb-chips">
-                <button class="mfb-chip active" data-filter="mf-beds" data-val="any" onclick="setMapChip(this)">Any</button>
-                <button class="mfb-chip" data-filter="mf-beds" data-val="3" onclick="setMapChip(this)">3</button>
-                <button class="mfb-chip" data-filter="mf-beds" data-val="4" onclick="setMapChip(this)">4</button>
-                <button class="mfb-chip" data-filter="mf-beds" data-val="5" onclick="setMapChip(this)">5+</button>
-              </div>
-            </div>
-            <div class="mfb-group">
               <span class="mfb-label">Region</span>
               <div class="mfb-chips" style="overflow-x:auto;flex-wrap:nowrap;-webkit-overflow-scrolling:touch">
                 <button class="mfb-chip active" data-filter="mf-region" data-val="all" onclick="setMapChip(this)">All Regions</button>
@@ -1048,16 +1039,6 @@ html,body{overflow-x:hidden;max-width:100vw}
             <button class="afr-chip active" data-key="storey" data-val="all" onclick="setAdvFilter(this)">Any</button>
             <button class="afr-chip" data-key="storey" data-val="single" onclick="setAdvFilter(this)">Single</button>
             <button class="afr-chip" data-key="storey" data-val="double" onclick="setAdvFilter(this)">Double</button>
-          </div>
-        </div>
-        <div class="afr-group">
-          <span class="afr-label">Bedrooms</span>
-          <div class="afr-chips">
-            <button class="afr-chip active" data-key="minBed" data-val="0" onclick="setAdvFilter(this)">Any</button>
-            <button class="afr-chip" data-key="minBed" data-val="2" onclick="setAdvFilter(this)">2+</button>
-            <button class="afr-chip" data-key="minBed" data-val="3" onclick="setAdvFilter(this)">3+</button>
-            <button class="afr-chip" data-key="minBed" data-val="4" onclick="setAdvFilter(this)">4+</button>
-            <button class="afr-chip" data-key="minBed" data-val="5" onclick="setAdvFilter(this)">5+</button>
           </div>
         </div>
         <div class="afr-group">
