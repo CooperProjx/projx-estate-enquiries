@@ -99,7 +99,6 @@ def clean_stroud():
     while right > left and col_is_green(right):
         right -= 1
 
-    # Small inset to be sure we've cleared any remaining green pixels
     inset = 2
     bbox = (
         min(left + inset, w),
@@ -108,8 +107,20 @@ def clean_stroud():
         max(bottom - inset + 1, 0),
     )
     cropped = img.crop(bbox)
+
+    # Strip the inner green brand-mark element too: replace any green-leaning
+    # pixel (including soft antialias edges) with white so only the wordmark
+    # + tagline remain. Looser than is_green_border to catch fringe pixels.
+    cw, ch = cropped.size
+    cpx = cropped.load()
+    for y in range(ch):
+        for x in range(cw):
+            r, g, b, a = cpx[x, y]
+            if a > 200 and g > r + 10 and g > b + 10 and g > 80:
+                cpx[x, y] = (255, 255, 255, 255)
+
     cropped.save(HERE / "stroud.png")
-    print(f"  stroud.png: {img.size} -> {cropped.size} (cropped inside green frame)")
+    print(f"  stroud.png: {img.size} -> {cropped.size} (frame cropped, green mark stripped)")
 
 
 def main():
