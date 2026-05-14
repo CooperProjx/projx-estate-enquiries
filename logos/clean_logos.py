@@ -30,8 +30,9 @@ def source(name: str) -> Path:
     return ORIG / name
 
 
-# ── DARE: fill transparent surround with black AND pad canvas wider so the
-#         black extends past the bsc-logo container (aspect ~2.32:1).
+# ── DARE: fill transparent surround AND pad canvas with the inner tile's
+#         exact background colour (not pure black) so there is no visible
+#         seam between original tile and padding.
 def clean_dare():
     src = source("dare.png")
     if not src.exists():
@@ -40,20 +41,26 @@ def clean_dare():
     img = Image.open(src).convert("RGBA")
     px = img.load()
     w, h = img.size
+    # Sample the inner tile background colour: walk inward from the centre
+    # along the horizontal midline until we hit the first opaque pixel.
+    cy = h // 2
+    x = 0
+    while x < w and px[x, cy][3] < 255:
+        x += 1
+    bg = px[min(x + 10, w - 1), cy][:3] if x < w else (0, 0, 0)
+    bg_rgba = (*bg, 255)
     for y in range(h):
         for x in range(w):
-            r, g, b, a = px[x, y]
-            if a < 255:
-                px[x, y] = (0, 0, 0, 255)
-    # Pad to a wider aspect ratio with black so no white shows in the card.
+            if px[x, y][3] < 255:
+                px[x, y] = bg_rgba
     target_aspect = 2.6
     new_w = max(w, int(h * target_aspect))
     if new_w > w:
-        padded = Image.new("RGBA", (new_w, h), (0, 0, 0, 255))
+        padded = Image.new("RGBA", (new_w, h), bg_rgba)
         padded.paste(img, ((new_w - w) // 2, 0))
         img = padded
     img.save(HERE / "dare.png")
-    print(f"  dare.png: filled+padded to {img.size}")
+    print(f"  dare.png: filled+padded with bg {bg} to {img.size}")
 
 
 # ── STROUD: detect & crop inside the green frame border ────────────────────
