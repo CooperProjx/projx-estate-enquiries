@@ -1287,6 +1287,7 @@ const BUILDERS = [
   {id:'dare', name:'Dare Homes', initials:'DR', tagline:'Architectural daring, design-forward',
    tier:'Premium', tierKey:'premium', priceRange:'From $480k', buildTime:'12–16 months',
    style:'Architectural premium', color:'#7C2D12', emoji:'✨',
+   logoBg:'#171717',
    domain:'darehomes.com.au'}
 ];
 
@@ -1848,7 +1849,7 @@ function renderBuilderSelectGrid() {
       <div class="bsc-flip-inner">
         <div class="bsc-face bsc-front" onclick="flipBuilderCard(this)">
           <div class="bsc-check">${isSelected?'<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7l4 4 6-6" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>':''}</div>
-          <div class="bsc-logo" style="background:${b.logo?'#fff':b.color}" data-initials="${b.initials}" data-color="${b.color}">${b.logo?`<img src="${b.logo}" alt="${b.name}" onerror="this.parentNode.style.background=this.parentNode.dataset.color;this.parentNode.textContent=this.parentNode.dataset.initials"/>`:b.initials}</div>
+          <div class="bsc-logo" style="background:${b.logo?(b.logoBg||'#fff'):b.color}" data-initials="${b.initials}" data-color="${b.color}">${b.logo?`<img src="${b.logo}" alt="${b.name}" onerror="this.parentNode.style.background=this.parentNode.dataset.color;this.parentNode.textContent=this.parentNode.dataset.initials"/>`:b.initials}</div>
           <div class="bsc-name">${b.name}</div>
           <div class="bsc-tagline">${b.tagline}</div>
           <div class="bsc-tier tier-${b.tierKey}">${b.tier}</div>
