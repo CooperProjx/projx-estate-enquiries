@@ -108,19 +108,38 @@ def clean_stroud():
     )
     cropped = img.crop(bbox)
 
-    # Strip the inner green brand-mark element too: replace any green-leaning
-    # pixel (including soft antialias edges) with white so only the wordmark
-    # + tagline remain. Looser than is_green_border to catch fringe pixels.
+    # Auto-trim near-white margins so the cube + wordmark sit centred.
+    # Walks edges inward; tolerates a handful of antialias-noise outlier
+    # pixels (frame-corner remnants) by requiring >2% non-white density
+    # before counting a row/col as "content".
     cw, ch = cropped.size
     cpx = cropped.load()
-    for y in range(ch):
-        for x in range(cw):
-            r, g, b, a = cpx[x, y]
-            if a > 200 and g > r + 10 and g > b + 10 and g > 80:
-                cpx[x, y] = (255, 255, 255, 255)
+    def is_white(p):
+        r, g, b, a = p
+        return a < 10 or (r >= 235 and g >= 235 and b >= 235)
+    row_thresh = max(3, int(cw * 0.02))
+    col_thresh = max(3, int(ch * 0.02))
+    def row_has_content(y):
+        return sum(1 for x in range(cw) if not is_white(cpx[x, y])) > row_thresh
+    def col_has_content(x):
+        return sum(1 for y in range(ch) if not is_white(cpx[x, y])) > col_thresh
+    top2 = 0
+    while top2 < ch and not row_has_content(top2):
+        top2 += 1
+    bottom2 = ch - 1
+    while bottom2 > top2 and not row_has_content(bottom2):
+        bottom2 -= 1
+    left2 = 0
+    while left2 < cw and not col_has_content(left2):
+        left2 += 1
+    right2 = cw - 1
+    while right2 > left2 and not col_has_content(right2):
+        right2 -= 1
+    if left2 < right2 and top2 < bottom2:
+        cropped = cropped.crop((left2, top2, right2 + 1, bottom2 + 1))
 
     cropped.save(HERE / "stroud.png")
-    print(f"  stroud.png: {img.size} -> {cropped.size} (frame cropped, green mark stripped)")
+    print(f"  stroud.png: {img.size} -> {cropped.size} (cube + wordmark, centred)")
 
 
 def main():
