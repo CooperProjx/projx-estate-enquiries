@@ -1818,7 +1818,7 @@ function selectLot(id, gridId) {
 
 function updateLotsFooter() {
   const info = document.getElementById('lots-footer-info');
-  if (info) info.innerHTML = S.lot ? `✓ <strong>${displayLotName(S.lot.name)}</strong> — ${fmt(S.lot.price)} — ${S.lot.lot_size}m² · ${S.lot.frontage}m frontage` : 'Select a lot to continue';
+  if (info) info.innerHTML = S.lot ? `✓ <strong>${displayLotName(S.lot.name)}</strong> — ${fmt(S.lot.price)}${S.lot.lot_size?' — '+S.lot.lot_size+'m²':''}${S.lot.frontage?' · '+S.lot.frontage+'m frontage':''}` : 'Select a lot to continue';
 }
 
 function continueFromLots() {
@@ -2343,8 +2343,8 @@ function renderSummary() {
   document.getElementById('summary-lot').innerHTML = lot ? `
     <div class="summary-row"><span class="s-lbl">Lot</span><span class="s-val">${lot.name}</span></div>
     <div class="summary-row"><span class="s-lbl">Project</span><span class="s-val">${proj?proj.name:''}</span></div>
-    <div class="summary-row"><span class="s-lbl">Land Size</span><span class="s-val">${lot.lot_size}m²</span></div>
-    <div class="summary-row"><span class="s-lbl">Frontage</span><span class="s-val">${lot.frontage}m</span></div>
+    <div class="summary-row"><span class="s-lbl">Land Size</span><span class="s-val">${lot.lot_size?lot.lot_size+'m²':'—'}</span></div>
+    <div class="summary-row"><span class="s-lbl">Frontage</span><span class="s-val">${lot.frontage?lot.frontage+'m':'—'}</span></div>
     <div class="summary-row"><span class="s-lbl">Land Price</span><span class="s-val">${fmt(lot.price)}</span></div>
     <div class="summary-row"><span class="s-lbl">Status</span><span class="s-val">${lot.availability}</span></div>` : '<p>No lot selected</p>';
   // Compare panel (1 or 2 cols)
