@@ -1536,13 +1536,6 @@ function projectPassesFilters(proj){
     });
     if(!hasMatch) return false;
   }
-  if(mapFilterState.beds!=='any'){
-    const target=parseInt(mapFilterState.beds);
-    const isPlus=mapFilterState.beds==='5';
-    const matchDesigns=DESIGNS.filter(d=>isPlus?d.bed>=target:d.bed===target);
-    if(!matchDesigns.length) return false;
-    if(!lots.some(l=>matchDesigns.some(d=>l.frontage>=d.minFrontage))) return false;
-  }
   if(mapFilterState.region!=='all'){
     const rp=REGION_MAP[mapFilterState.region]||[];
     if(!rp.includes(proj.id)) return false;
@@ -1603,22 +1596,21 @@ BUILDERS.forEach(b => {
 const REGION_MAP = {"scenic-rim": ["oaklandestate"], "lockyer-valley": ["woodchester", "lakeviewestate"], "gold-coast": ["foxshipper", "riverina"], "logan": ["brookdale", "thegables"], "moreton-bay": ["atnineteen", "northpinegolfestate"], "northern-nsw": ["eade", "harvest"], "mackay": ["elio"], "sunshine-coast": ["serenity"], "gympie": ["sorensenrise"]};
 const REGION_BOUNDS = {"scenic-rim": [[-28.069999999999997, 152.89], [-27.91, 153.05]], "lockyer-valley": [[-27.639999999999997, 152.19], [-27.470000000000002, 152.36]], "gold-coast": [[-28.099999999999998, 153.26999999999998], [-27.78, 153.45000000000002]], "logan": [[-27.799999999999997, 152.95999999999998], [-27.590000000000003, 153.28]], "moreton-bay": [[-27.319999999999997, 152.85], [-27.080000000000002, 153.03]], "northern-nsw": [[-28.729999999999997, 153.53], [-28.560000000000002, 153.70000000000002]], "mackay": [[-21.209999999999997, 149.08999999999997], [-21.05, 149.25]], "sunshine-coast": [[-26.93, 152.89], [-26.770000000000003, 153.05]], "gympie": [[-26.279999999999998, 152.57], [-26.12, 152.73000000000002]]};
 
-const mapFilterState = {price:0,beds:'any',region:'all',timeline:'all'};
+const mapFilterState = {price:0,region:'all',timeline:'all'};
 
 function setMapChip(btn){
   const group = btn.getAttribute('data-filter');
   const val = btn.getAttribute('data-val');
   document.querySelectorAll('[data-filter="'+group+'"]').forEach(c=>c.classList.remove('active'));
   btn.classList.add('active');
-  if(group==='mf-beds') mapFilterState.beds=val;
-  else if(group==='mf-region') mapFilterState.region=val;
+  if(group==='mf-region') mapFilterState.region=val;
   else if(group==='mf-timeline') mapFilterState.timeline=val;
   applyMapFilters();
 }
 
 function applyMapFilters(){
   mapFilterState.price = parseInt(document.getElementById('mf-price').value)||0;
-  const isFiltered = mapFilterState.price>0||mapFilterState.beds!=='any'||mapFilterState.region!=='all'||mapFilterState.timeline!=='all';
+  const isFiltered = mapFilterState.price>0||mapFilterState.region!=='all'||mapFilterState.timeline!=='all';
   document.getElementById('mfb-clear').style.display = isFiltered?'block':'none';
 
   if(mapFilterState.region!=='all'&&REGION_BOUNDS[mapFilterState.region]){
@@ -1660,7 +1652,7 @@ function updateMarkerStyle(proj,marker,active){
 }
 
 function clearMapFilters(){
-  mapFilterState.price=0;mapFilterState.beds='any';mapFilterState.region='all';mapFilterState.timeline='all';
+  mapFilterState.price=0;mapFilterState.region='all';mapFilterState.timeline='all';
   document.getElementById('mf-price').value=0;
   updateMapPriceLabel(0);
   document.querySelectorAll('.mfb-chip').forEach(c=>{
