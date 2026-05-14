@@ -1580,6 +1580,8 @@ function renderProjectList(){
   if(countEl) countEl.textContent = passing.length+' of '+PROJECTS.length;
 }
 
+BUILDERS.forEach(b => { if (!b.logo) b.logo = 'logos/' + b.id + '.png'; });
+
 // ── Map Filter Logic ──────────────────────────────────────────────────────────
 const BUILDER_MID_PRICES = {};
 BUILDERS.forEach(b => {

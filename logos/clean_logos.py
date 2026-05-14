@@ -1,0 +1,116 @@
+"""
+Bespoke logo clean-up.
+
+Back up every PNG to logos/originals/ (only if not already backed up),
+then apply per-logo cleanup rules so the builder cards render without
+distracting padding/borders.
+
+Re-running is safe: each clean step reads from logos/originals/.
+"""
+import shutil
+from pathlib import Path
+from PIL import Image
+
+HERE = Path(__file__).parent
+ORIG = HERE / "originals"
+ORIG.mkdir(exist_ok=True)
+
+
+def backup_all():
+    for p in HERE.glob("*.png"):
+        if p.name.endswith(".bak"):
+            continue
+        target = ORIG / p.name
+        if not target.exists():
+            shutil.copy2(p, target)
+
+
+def source(name: str) -> Path:
+    """Always read from the preserved original."""
+    return ORIG / name
+
+
+# ── DARE: fill transparent surround with black AND pad canvas wider so the
+#         black extends past the bsc-logo container (aspect ~2.32:1).
+def clean_dare():
+    src = source("dare.png")
+    if not src.exists():
+        print("  dare.png: no original, skipped")
+        return
+    img = Image.open(src).convert("RGBA")
+    px = img.load()
+    w, h = img.size
+    for y in range(h):
+        for x in range(w):
+            r, g, b, a = px[x, y]
+            if a < 255:
+                px[x, y] = (0, 0, 0, 255)
+    # Pad to a wider aspect ratio with black so no white shows in the card.
+    target_aspect = 2.6
+    new_w = max(w, int(h * target_aspect))
+    if new_w > w:
+        padded = Image.new("RGBA", (new_w, h), (0, 0, 0, 255))
+        padded.paste(img, ((new_w - w) // 2, 0))
+        img = padded
+    img.save(HERE / "dare.png")
+    print(f"  dare.png: filled+padded to {img.size}")
+
+
+# ── STROUD: detect & crop inside the green frame border ────────────────────
+def is_green_border(px):
+    r, g, b, a = px
+    # green-dominant pixels: G clearly higher than R and B, G > 100
+    return a > 200 and g > 100 and g > r + 30 and g > b + 30
+
+
+def clean_stroud():
+    src = source("stroud.png")
+    if not src.exists():
+        print("  stroud.png: no original, skipped")
+        return
+    img = Image.open(src).convert("RGBA")
+    w, h = img.size
+    px = img.load()
+
+    # Walk inward from each edge until a row/column is mostly non-green
+    def row_is_green(y):
+        return sum(1 for x in range(w) if is_green_border(px[x, y])) > w * 0.5
+
+    def col_is_green(x):
+        return sum(1 for y in range(h) if is_green_border(px[x, y])) > h * 0.5
+
+    top = 0
+    while top < h and row_is_green(top):
+        top += 1
+    bottom = h - 1
+    while bottom > top and row_is_green(bottom):
+        bottom -= 1
+    left = 0
+    while left < w and col_is_green(left):
+        left += 1
+    right = w - 1
+    while right > left and col_is_green(right):
+        right -= 1
+
+    # Small inset to be sure we've cleared any remaining green pixels
+    inset = 2
+    bbox = (
+        min(left + inset, w),
+        min(top + inset, h),
+        max(right - inset + 1, 0),
+        max(bottom - inset + 1, 0),
+    )
+    cropped = img.crop(bbox)
+    cropped.save(HERE / "stroud.png")
+    print(f"  stroud.png: {img.size} -> {cropped.size} (cropped inside green frame)")
+
+
+def main():
+    backup_all()
+    print("Backups in:", ORIG)
+    clean_dare()
+    clean_stroud()
+
+
+if __name__ == "__main__":
+    main()
