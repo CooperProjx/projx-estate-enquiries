@@ -867,6 +867,170 @@ html,body{overflow-x:hidden;max-width:100vw}
   .mfb-chip{padding:8px 12px;font-size:11px;min-height:40px}
   .mfb-label{font-size:8px}
 }
+
+/* === MOBILE RESPONSIVE DRAFT START === */
+@media (max-width: 768px) {
+  /* Map: project list collapses to dropdown-style scrollable panel, map below */
+  .map-section{margin:0 0 14px;border-radius:0;border-left:none;border-right:none}
+  .map-split{flex-direction:column;height:auto;min-height:0}
+  .project-list-panel{
+    flex:none;width:100%;
+    max-height:32vh;overflow-y:auto;-webkit-overflow-scrolling:touch;
+    border-right:none;border-bottom:1px solid rgba(255,255,255,0.1);
+    padding:10px 10px 12px;
+  }
+  .map-pane{flex:none;width:100%}
+  .map-wrap{height:320px;max-height:320px;min-height:0}
+  .map-split #map{height:100%;min-height:auto;touch-action:pan-x pan-y}
+  /* Standalone #map (no map-split wrapper): keep touch-action for one-finger pan */
+  #map{touch-action:pan-x pan-y}
+
+  /* Card grids: single column */
+  .lot-grid{grid-template-columns:1fr;gap:12px}
+  .builder-select-grid{grid-template-columns:1fr;gap:12px}
+  .design-grid{grid-template-columns:1fr;gap:12px}
+  .entry-paths-grid{grid-template-columns:1fr;gap:12px}
+
+  /* Inclusions: horizontal swipe with free fluid scrolling (no snap = no stuck) */
+  .inclusions-grid{
+    grid-template-columns:none !important;
+    display:flex !important;
+    overflow-x:auto !important;
+    overflow-y:visible;
+    gap:10px;
+    padding-bottom:8px;
+    padding-right:24px;
+    -webkit-overflow-scrolling:touch;
+    scroll-snap-type:none !important;
+    scroll-padding:0;
+  }
+  .incl-option{
+    min-width:210px !important;
+    flex-shrink:0 !important;
+    flex-grow:0;
+    scroll-snap-align:none !important;
+    box-sizing:border-box;
+  }
+  .incl-desc{white-space:normal;word-wrap:break-word;overflow-wrap:break-word}
+  /* Facade row: relaxed snap so it does not stick at the end */
+  .facade-grid{scroll-snap-type:x proximity !important;padding-right:24px !important}
+  .facade-option{scroll-snap-align:none !important}
+
+  /* Customize: single column, pricing sidebar HARD-LOCKED to viewport width */
+  .customize-layout{
+    grid-template-columns:1fr !important;
+    gap:14px !important;
+    max-width:100% !important;
+    width:100% !important;
+  }
+  .customize-main{min-width:0 !important;max-width:100% !important;width:100% !important}
+  .customize-section{max-width:100% !important;overflow-x:hidden;padding:16px}
+  .pricing-sidebar{
+    position:static !important;
+    width:100% !important;
+    min-width:0 !important;
+    max-width:100% !important;
+    box-sizing:border-box !important;
+    overflow-x:hidden !important;
+    padding:16px !important;
+    margin:0 !important;
+  }
+  .pricing-sidebar *{min-width:0;max-width:100%;box-sizing:border-box}
+  .pricing-design-preview{padding:10px;width:100%}
+  .pricing-row{display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;width:100%}
+  .pricing-row-lbl,.pricing-row-val{min-width:0;max-width:100%;word-break:break-word}
+  .pricing-rows{width:100%;max-width:100%}
+  .pricing-total{width:100%;max-width:100%;box-sizing:border-box;padding:12px}
+  .pricing-total .lbl{font-size:9px}
+  .pricing-total .amount{font-size:22px !important;word-break:break-word;letter-spacing:-0.5px}
+  .pricing-total .qualifier{font-size:9px}
+  .pricing-disclaimer{
+    white-space:normal !important;
+    word-wrap:break-word !important;
+    overflow-wrap:break-word !important;
+    font-size:10px;
+  }
+  /* Belt-and-braces: clip any stray horizontal overflow at the page level */
+  html,body{overflow-x:hidden !important;max-width:100vw !important}
+  .view{max-width:100vw;overflow-x:hidden}
+  .view-content{max-width:100%;overflow-x:hidden}
+
+  /* Summary */
+  .summary-grid{grid-template-columns:1fr;padding:12px;gap:12px}
+  .summary-hero{flex-direction:column;padding:16px 12px;gap:12px}
+  .summary-hero-right{text-align:left}
+  .compare-grid.two-col{grid-template-columns:1fr}
+
+  /* Page-level safe-area padding */
+  .view-content{
+    padding-left:max(16px, env(safe-area-inset-left));
+    padding-right:max(16px, env(safe-area-inset-right));
+  }
+  .eoi-section{
+    margin-left:max(12px, env(safe-area-inset-left));
+    margin-right:max(12px, env(safe-area-inset-right));
+    padding:20px 16px;
+  }
+  .builder-showcase{
+    padding-left:max(12px, env(safe-area-inset-left));
+    padding-right:max(12px, env(safe-area-inset-right));
+  }
+
+  /* Top bar: allow confidential pill to drop below title on narrow screens */
+  .top-bar{height:auto;min-height:54px;padding:8px 12px;flex-wrap:wrap;gap:6px}
+  .top-bar-left{flex:1;min-width:0;flex-wrap:wrap;gap:8px}
+  .top-bar-right{flex-shrink:0}
+  .top-title{font-size:12px}
+  .top-title span{font-size:10px}
+  .confidential-badge{font-size:9px;padding:3px 8px}
+
+  /* Breadcrumb: horizontally scrollable, no wrapping */
+  .breadcrumb-bar{overflow-x:auto;-webkit-overflow-scrolling:touch;padding:8px 12px}
+  .breadcrumb{flex-wrap:nowrap;white-space:nowrap;overflow-x:auto;gap:4px}
+
+  /* Filter chip rows: wrap to multiple lines */
+  .mfb-chips{flex-wrap:wrap;gap:6px}
+  .mfb-chip{padding:7px 12px;font-size:11px;min-height:40px;display:inline-flex;align-items:center}
+  .mfb-select{padding:8px 12px;font-size:12px;min-height:40px}
+  .afr-chips{flex-wrap:wrap;gap:6px}
+  .ausbuild-filter-row{flex-wrap:wrap;gap:12px}
+  .afr-group-price{min-width:100%;max-width:none}
+
+  /* Project list rows: thumb-tappable */
+  .project-card{min-height:56px}
+  .pc-arrow{padding:12px;margin-right:-12px}
+
+  /* Page titles */
+  .view-header h2{font-size:24px}
+  .view-header p{font-size:12px}
+
+  /* EOI form: single column, 16px inputs (prevents iOS auto-zoom on focus) */
+  .form-grid{grid-template-columns:1fr;gap:12px}
+  .form-field input,.form-field select,.form-field textarea{
+    width:100%;min-height:48px;font-size:16px;
+  }
+  .btn-submit{width:100%;min-height:48px;font-size:16px}
+
+  /* Primary action buttons: full-width, 48px touch target */
+  .continue-btn{
+    width:100%;min-height:48px;font-size:16px;justify-content:center;
+  }
+  .lot-select-btn{min-height:48px;font-size:12px}
+  .design-select-btn{min-height:44px;padding:12px;font-size:12px}
+  .bsc-select-btn{min-height:44px;font-size:12px}
+  .frontage-select-btn{min-height:44px}
+
+  /* Sticky bottom action bar: safe-area inset for iOS home indicator */
+  .continue-footer{
+    padding-top:12px;
+    padding-bottom:max(12px, env(safe-area-inset-bottom));
+    padding-left:max(12px, env(safe-area-inset-left));
+    padding-right:max(12px, env(safe-area-inset-right));
+    flex-direction:column;gap:8px;align-items:stretch;
+  }
+  .continue-footer-left{font-size:11px;text-align:center}
+}
+/* === MOBILE RESPONSIVE DRAFT END === */
 </style>
 </head>
 <body>
